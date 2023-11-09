@@ -8,10 +8,12 @@ const result = document.querySelector(".result");
 const input =  document.querySelector("#listitem");
 const addButton =  document.querySelector(".add-btn");
 const delButton =  document.querySelector(".del-btn");
+const chaButton =  document.querySelector(".cha-btn");
 
 // Listeners
 addButton.addEventListener("click", httpPost);
 delButton.addEventListener("click", httpDelete);
+chaButton.addEventListener("click", httpChange);
 
 /* Helper Functions */
 function ShowList() {
@@ -55,6 +57,26 @@ async function httpDelete(e) {
     if(theList[i] != inputvalue){
       newList.push(theList[i]);
     }else{
+      for(let x = (i+1); x < theList.length; x++){
+        newList.push(theList[x]);
+      }
+      break;
+    }
+  }
+  theList = newList;
+  await WriteList();
+}
+
+async function httpChange(e) {
+  let newList = [];
+  const inputvalue = input.value;
+  
+  for(let i = 0; i < theList.length; i++){
+    if(theList[i] != inputvalue){
+      newList.push(theList[i]);
+    }else{
+      let changeElement = prompt("Please Enter New List Item:", inputvalue)
+      newList.push(changeElement);
       for(let x = (i+1); x < theList.length; x++){
         newList.push(theList[x]);
       }
